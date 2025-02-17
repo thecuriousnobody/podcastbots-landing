@@ -1,46 +1,70 @@
-# Getting Started with Create React App
+# PodcastBots.ai Landing Page
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Landing page for PodcastBots.ai, featuring a waitlist signup for beta testers.
 
-## Available Scripts
+## Setup
 
-In the project directory, you can run:
+1. Install dependencies:
+```bash
+npm install
+```
 
-### `npm start`
+2. Set up environment variables:
+```bash
+cp .env.example .env
+```
+Then edit `.env` with your Firebase configuration.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+3. Start development server:
+```bash
+npm start
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Project Structure
 
-### `npm test`
+```
+src/
+├── components/
+│   ├── Layout/     # Main layout wrapper
+│   ├── Hero/       # Hero section with main content
+│   └── BetaSignup/ # Waitlist signup form
+├── theme/          # MUI theme configuration
+├── firebase.ts     # Firebase initialization
+└── App.tsx         # Main app component
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Firebase Setup
 
-### `npm run build`
+1. Create a new Firebase project
+2. Enable Authentication and Firestore
+3. Add your web app to get configuration
+4. Update `.env` with your Firebase config values
+5. Add `podcastbots.ai` to authorized domains
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Development
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- `npm start` - Start development server
+- `npm test` - Run tests
+- `npm run build` - Build for production
+- `npm run deploy` - Deploy to Firebase hosting
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Deployment
 
-### `npm run eject`
+1. Install Firebase CLI:
+```bash
+npm install -g firebase-tools
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2. Login to Firebase:
+```bash
+firebase login
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Initialize Firebase:
+```bash
+firebase init
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. Deploy:
+```bash
+npm run build && firebase deploy
