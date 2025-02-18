@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "potentiator-ai"
+  },
+  "targets": {
+    "potentiator-ai": {
+      "hosting": {
+        "landing": [
+          "podcastbots-landing"
+        ]
+      }
+    }
+  }
+}
