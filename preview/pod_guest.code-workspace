@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "pod_guest",
+			"path": "../../pod_guest"
+		},
+		{
+			"name": "podcastbots-landing",
+			"path": ".."
+		}
+	],
+	"settings": {}
+}
