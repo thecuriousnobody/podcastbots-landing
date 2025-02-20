@@ -77,7 +77,7 @@ const Hero = () => {
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        py: { xs: 6, md: 12 }
+        py: { xs: 4, sm: 6, md: 12 }
       }}
     >
       {/* Main content */}
@@ -85,7 +85,7 @@ const Hero = () => {
         sx={{
           display: 'grid',
           gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-          gap: { xs: 6, md: 12 },
+          gap: { xs: 4, sm: 6, md: 12 },
           position: 'relative',
           zIndex: 1,
           mx: 'auto',
@@ -96,12 +96,12 @@ const Hero = () => {
       >
         {/* Left side - Content */}
         <Box>
-          <Box sx={{ mb: 3 }}>
+          <Box sx={{ mb: { xs: 2, sm: 3 } }}>
             <MotionTypography
               variant="h1"
               {...fadeInUp}
               sx={{
-                fontSize: { xs: '1.75rem', md: '3rem' },
+                fontSize: { xs: '1.5rem', sm: '1.75rem', md: '3rem' },
                 fontWeight: 600,
                 color: monoPalette.text.secondary,
                 lineHeight: 1,
@@ -116,11 +116,12 @@ const Hero = () => {
               variant="h1"
               {...fadeInUp}
               sx={{
-                fontSize: { xs: '3.5rem', md: '6rem' },
+                fontSize: { xs: '2.75rem', sm: '3.5rem', md: '6rem' },
                 fontWeight: 700,
                 color: monoPalette.text.primary,
-                lineHeight: 1,
-                position: 'relative'
+                lineHeight: 1.1,
+                position: 'relative',
+                maxWidth: { xs: '90%', md: '100%' }
               }}
             >
               Podcasters
@@ -133,10 +134,10 @@ const Hero = () => {
             transition={{ ...fadeInUp.transition, delay: 0.2 }}
             sx={{
               color: monoPalette.text.body,
-              mb: 4,
+              mb: { xs: 3, md: 4 },
               lineHeight: 1.6,
-              maxWidth: '600px',
-              fontSize: { xs: '1.125rem', md: '1.25rem' }
+              maxWidth: { xs: '100%', md: '600px' },
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
             }}
           >
             Transform your podcasting workflow with intelligent assistants that handle guest discovery, enhance interviews, and curate your best content.
@@ -148,7 +149,7 @@ const Hero = () => {
             transition={{ ...fadeInUp.transition, delay: 0.4 }}
             sx={{ 
               display: 'grid', 
-              gap: 3, 
+              gap: { xs: 2, sm: 3 }, 
               gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
               position: 'relative'
             }}
@@ -175,10 +176,10 @@ const Hero = () => {
                 elevation={0}
                 {...cardHover}
                 sx={{
-                  p: 3,
+                  p: { xs: 2.5, sm: 3 },
                   borderRadius: '16px',
                   border: `1px solid ${monoPalette.border}`,
-                  minHeight: '200px',
+                  minHeight: { xs: '180px', sm: '200px' },
                   transition: 'all 0.3s ease',
                   position: 'relative',
                   overflow: 'hidden',
@@ -198,7 +199,8 @@ const Hero = () => {
                     sx={{
                       color: card.style.color || monoPalette.text.primary,
                       mb: 2,
-                      fontWeight: 600
+                      fontWeight: 600,
+                      fontSize: { xs: '1.125rem', sm: '1.25rem' }
                     }}
                   >
                     {card.title}
@@ -212,7 +214,10 @@ const Hero = () => {
                   >
                     <Typography
                       variant="body1"
-                      sx={{ color: card.style.color || monoPalette.text.body }}
+                      sx={{ 
+                        color: card.style.color || monoPalette.text.body,
+                        fontSize: { xs: '0.9375rem', sm: '1rem' }
+                      }}
                     >
                       {card.description}
                     </Typography>
@@ -229,7 +234,8 @@ const Hero = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: 4
+            gap: { xs: 3, sm: 4 },
+            mt: { xs: 4, md: 0 }
           }}
         >
           <MotionImage
@@ -281,7 +287,8 @@ const Hero = () => {
                 color: monoPalette.text.primary,
                 mb: 3,
                 fontWeight: 600,
-                textAlign: 'center'
+                textAlign: 'center',
+                fontSize: { xs: '1.125rem', sm: '1.25rem' }
               }}
             >
               Join the Creative Journey
@@ -335,7 +342,7 @@ const Hero = () => {
               sx={{
                 backgroundColor: monoPalette.black,
                 color: monoPalette.paper,
-                py: 1.5,
+                py: { xs: 1.25, sm: 1.5 },
                 position: 'relative',
                 overflow: 'hidden',
                 '&:hover': {
@@ -377,7 +384,7 @@ const Hero = () => {
       {/* Future Forge Preview */}
       <Box
         sx={{
-          mt: { xs: 12, md: 16 },
+          mt: { xs: 8, sm: 12, md: 16 },
           px: { xs: 2, sm: 4, md: 6 },
           maxWidth: '1400px',
           mx: 'auto',
@@ -388,10 +395,11 @@ const Hero = () => {
           variant="h4"
           sx={{
             color: monoPalette.text.primary,
-            mb: { xs: 8, md: 10 },
+            mb: { xs: 6, sm: 8, md: 10 },
             fontWeight: 600,
             textAlign: 'center',
-            letterSpacing: '0.02em'
+            letterSpacing: '0.02em',
+            fontSize: { xs: '1.5rem', sm: '2rem' }
           }}
         >
           Roadmap: From Discovery to Engaging Content
@@ -415,7 +423,7 @@ const Hero = () => {
             sx={{
               display: 'grid',
               gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' },
-              gap: { xs: 4, md: 8 },
+              gap: { xs: 3, sm: 4, md: 8 },
               position: 'relative',
               zIndex: 1
             }}
@@ -462,7 +470,7 @@ const Hero = () => {
                 }}
                 viewport={{ once: true }}
                 sx={{
-                  p: 3,
+                  p: { xs: 2.5, sm: 3 },
                   backgroundColor: index === 0 ? monoPalette.paper : monoPalette.hover,
                   borderRadius: '16px',
                   border: `2px solid ${index === 0 ? monoPalette.black : monoPalette.border}`,
@@ -484,8 +492,8 @@ const Hero = () => {
                 <Box>
                   <Box
                     sx={{
-                      width: 48,
-                      height: 48,
+                      width: { xs: 40, sm: 48 },
+                      height: { xs: 40, sm: 48 },
                       borderRadius: '12px',
                       backgroundColor: index === 0 ? monoPalette.black : monoPalette.text.secondary,
                       display: 'flex',
@@ -506,7 +514,8 @@ const Hero = () => {
                       color: monoPalette.text.primary,
                       mb: 1,
                       fontWeight: 600,
-                      transform: 'none'
+                      transform: 'none',
+                      fontSize: { xs: '1.125rem', sm: '1.25rem' }
                     }}
                   >
                     {phase.title}
@@ -524,7 +533,8 @@ const Hero = () => {
                       sx={{
                         color: monoPalette.text.body,
                         mb: 2,
-                        transform: 'none'
+                        transform: 'none',
+                        fontSize: { xs: '0.875rem', sm: '1rem' }
                       }}
                     >
                       {phase.description}
@@ -538,7 +548,7 @@ const Hero = () => {
                       backgroundColor: index === 0 ? monoPalette.black : monoPalette.text.secondary,
                       color: monoPalette.paper,
                       display: 'inline-block',
-                      fontSize: '0.75rem',
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' },
                       fontWeight: 500,
                       transform: 'none'
                     }}
@@ -555,8 +565,8 @@ const Hero = () => {
       {/* Footer */}
       <Box
         sx={{
-          mt: { xs: 8, md: 12 },
-          pb: 4,
+          mt: { xs: 6, sm: 8, md: 12 },
+          pb: { xs: 3, sm: 4 },
           textAlign: 'center'
         }}
       >
@@ -565,7 +575,7 @@ const Hero = () => {
           sx={{
             color: monoPalette.text.secondary,
             opacity: 0.7,
-            fontSize: '0.875rem'
+            fontSize: { xs: '0.75rem', sm: '0.875rem' }
           }}
         >
           Part of the potentiator.ai family
