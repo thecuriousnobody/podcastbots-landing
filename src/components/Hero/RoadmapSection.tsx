@@ -9,22 +9,19 @@ const RoadmapSection = () => {
       icon: Search,
       title: 'Guest Discovery & Outreach',
       description: 'Your dedicated team finds perfect guests for your podcast and crafts personalized outreach that resonates with their interests',
-      status: 'Beta Launch',
-      offset: { xs: 0, md: -20 }
+      status: 'Beta Launch'
     },
     {
       icon: Mic,
       title: 'Your Digital Jamie',
       description: 'Like having your own research producer, pulling up relevant insights, bridging perspectives, and suggesting talking points in real-time',
-      status: 'Coming Soon',
-      offset: { xs: 0, md: 0 }
+      status: 'Coming Soon'
     },
     {
       icon: Share2,
       title: 'Smart Content Curator',
       description: 'Your dedicated curator identifies and highlights your podcast\'s most engaging moments, tailored to what your audience loves most',
-      status: 'Coming Soon',
-      offset: { xs: 0, md: 20 }
+      status: 'Coming Soon'
     }
   ];
 
@@ -85,11 +82,9 @@ const RoadmapSection = () => {
                 border: `2px solid ${index === 0 ? monoPalette.black : monoPalette.border}`,
                 position: 'relative',
                 overflow: 'hidden',
-                transform: `translateY(${phase.offset.xs}px)`,
                 transition: 'all 0.4s ease-in-out',
                 opacity: 1,
                 '@media (min-width: 900px)': {
-                  transform: `translateY(${phase.offset.md}px)`,
                   boxShadow: `0 4px ${index === 0 ? '0' : '20px'} ${monoPalette.shadow}`
                 },
                 '&:hover': {
