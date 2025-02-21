@@ -3,9 +3,14 @@ import { Box, Typography, Input, Button } from '../../utils/mui';
 import { monoPalette } from '../../theme';
 import FeatureCard from './FeatureCard';
 import { addToWaitlist } from '../../services/waitlist';
+import '../../styles/animations.css';
 
-// Dynamic image import
-const robotLogo = new URL('../../assets/images/AI Bot For PodCastBots No Background Transparent.png', import.meta.url).href;
+// Import optimized images
+const robotLogo = {
+  small: new URL('../../assets/images/robot-small.webp', import.meta.url).href,
+  large: new URL('../../assets/images/robot-large.webp', import.meta.url).href,
+  fallback: new URL('../../assets/images/AI Bot For PodCastBots No Background Transparent.png', import.meta.url).href
+};
 
 // Lazy load the RoadmapSection
 const RoadmapSection = React.lazy(() => import('./RoadmapSection'));
@@ -251,16 +256,18 @@ const Hero = () => {
 
           {/* Robot Image */}
           <Box sx={{ width: '100%', order: { xs: 0, md: 0 } }}>
-            <img
-              src={robotLogo}
-              alt="PodcastBots.ai Robot"
-              style={{
-                width: '100%',
-                maxWidth: '400px',
-                height: 'auto',
-                filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))'
-              }}
-            />
+            <picture>
+              <source
+                type="image/webp"
+                srcSet={`${robotLogo.small} 200w, ${robotLogo.large} 400w`}
+                sizes="(max-width: 600px) 200px, 400px"
+              />
+              <img
+                src={robotLogo.fallback}
+                alt="PodcastBots.ai Robot"
+                className="robot-float"
+              />
+            </picture>
           </Box>
         </Box>
       </Box>
