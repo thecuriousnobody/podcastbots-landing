@@ -13,12 +13,8 @@ firebase login
 echo "Building project..."
 npm run build
 
-# Clear Firebase hosting cache
-echo "Clearing Firebase hosting cache..."
-firebase hosting:clearCache
-
-# Deploy to Firebase with specific target
+# Deploy to Firebase
 echo "Deploying to Firebase..."
-firebase deploy --only hosting:landing
+firebase deploy
 
-echo "Deployment complete! Your site should be live at podcastbots-landing--potentiator-ai.us-central1.hosted.app"
+echo "Deployment complete! Your site should be live at potentiator-ai.web.app"
