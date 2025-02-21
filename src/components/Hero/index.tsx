@@ -1,9 +1,11 @@
 import React, { Suspense } from 'react';
-import { Box, Typography, Input, Button } from '@mui/material';
+import { Box, Typography, Input, Button } from '../../utils/mui';
 import { monoPalette } from '../../theme';
-import robotLogo from '../../assets/images/AI Bot For PodCastBots No Background Transparent.png';
 import FeatureCard from './FeatureCard';
 import { addToWaitlist } from '../../services/waitlist';
+
+// Dynamic image import
+const robotLogo = new URL('../../assets/images/AI Bot For PodCastBots No Background Transparent.png', import.meta.url).href;
 
 // Lazy load the RoadmapSection
 const RoadmapSection = React.lazy(() => import('./RoadmapSection'));

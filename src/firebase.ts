@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore/lite';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -22,20 +21,19 @@ console.log('Firebase Config:', {
 });
 
 let app: ReturnType<typeof initializeApp>;
-let auth: ReturnType<typeof getAuth>;
 let db: ReturnType<typeof getFirestore>;
 
 try {
-  // Initialize Firebase
+  // Initialize Firebase with lite SDK
   app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
   db = getFirestore(app);
   console.log('Firebase initialized successfully');
 } catch (error) {
   console.error('Error initializing Firebase:', error);
   // Initialize with minimal config to prevent crashes
   app = initializeApp({ projectId: firebaseConfig.projectId || 'fallback-id' });
+  db = getFirestore(app);
   console.warn('Firebase initialized with fallback configuration');
 }
 
-export { app as default, auth, db };
+export { app as default, db };

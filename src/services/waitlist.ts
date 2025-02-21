@@ -4,10 +4,9 @@ import {
   serverTimestamp, 
   getDocs, 
   query, 
-  where, 
-  Firestore, 
+  where,
   FieldValue 
-} from 'firebase/firestore';
+} from 'firebase/firestore/lite';
 import { db } from '../firebase';
 
 interface WaitlistEntry {

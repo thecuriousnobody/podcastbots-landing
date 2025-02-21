@@ -1,10 +1,6 @@
 import React from 'react';
 import { Box, Typography, Paper } from '@mui/material';
-import { motion } from 'framer-motion';
 import { monoPalette } from '../../theme';
-
-const MotionPaper = motion(Paper);
-const MotionBox = motion(Box);
 
 interface FeatureCardProps {
   title: string;
@@ -18,12 +14,8 @@ interface FeatureCardProps {
 
 const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, style }) => {
   return (
-    <MotionPaper
+    <Paper
       elevation={0}
-      whileHover={{ 
-        y: -5,
-        transition: { duration: 0.2 }
-      }}
       sx={{
         p: { xs: 2.5, sm: 3 },
         borderRadius: '16px',
@@ -35,9 +27,11 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, style }) 
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        transform: 'translateY(0)',
         ...style,
         '&:hover': {
-          boxShadow: `0 20px 40px ${monoPalette.shadow}`
+          boxShadow: `0 20px 40px ${monoPalette.shadow}`,
+          transform: 'translateY(-5px)'
         }
       }}
     >
@@ -53,11 +47,11 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, style }) 
         >
           {title}
         </Typography>
-        <MotionBox
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-          viewport={{ once: true }}
+        <Box
+          sx={{
+            opacity: 1,
+            transition: 'opacity 0.3s ease'
+          }}
         >
           <Typography
             variant="body1"
@@ -68,9 +62,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, style }) 
           >
             {description}
           </Typography>
-        </MotionBox>
+        </Box>
       </Box>
-    </MotionPaper>
+    </Paper>
   );
 };
 

@@ -1,10 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { motion } from 'framer-motion';
 import { Search, Mic, Share2 } from 'lucide-react';
 import { monoPalette } from '../../theme';
-
-const MotionPaper = motion(Box);
 
 const RoadmapSection = () => {
   const phases = [
@@ -79,15 +76,8 @@ const RoadmapSection = () => {
           }}
         >
           {phases.map((phase, index) => (
-            <MotionPaper
+            <Box
               key={phase.title}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ 
-                opacity: 1, 
-                y: 0,
-                transition: { duration: 0.4, delay: index * 0.1 }
-              }}
-              viewport={{ once: true }}
               sx={{
                 p: { xs: 2.5, sm: 3 },
                 backgroundColor: index === 0 ? monoPalette.paper : monoPalette.hover,
@@ -97,6 +87,7 @@ const RoadmapSection = () => {
                 overflow: 'hidden',
                 transform: `translateY(${phase.offset.xs}px)`,
                 transition: 'all 0.4s ease-in-out',
+                opacity: 1,
                 '@media (min-width: 900px)': {
                   transform: `translateY(${phase.offset.md}px)`,
                   boxShadow: `0 4px ${index === 0 ? '0' : '20px'} ${monoPalette.shadow}`
@@ -137,11 +128,11 @@ const RoadmapSection = () => {
                 >
                   {phase.title}
                 </Typography>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  viewport={{ once: true }}
+                <Box
+                  sx={{
+                    opacity: 1,
+                    transition: 'opacity 0.3s ease'
+                  }}
                 >
                   <Typography
                     variant="body2"
@@ -153,7 +144,7 @@ const RoadmapSection = () => {
                   >
                     {phase.description}
                   </Typography>
-                </motion.div>
+                </Box>
                 <Box
                   sx={{
                     px: 2,
@@ -169,7 +160,7 @@ const RoadmapSection = () => {
                   {phase.status}
                 </Box>
               </Box>
-            </MotionPaper>
+            </Box>
           ))}
         </Box>
       </Box>
