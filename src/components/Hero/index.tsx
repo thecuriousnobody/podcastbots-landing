@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Box, Typography, TextField, Button } from '@mui/material';
+import { Box, Typography, Input, Button } from '@mui/material';
 import { motion } from 'framer-motion';
 import { monoPalette } from '../../theme';
 import robotLogo from '../../assets/images/AI Bot For PodCastBots No Background Transparent.png';
@@ -12,7 +12,6 @@ const RoadmapSection = React.lazy(() => import('./RoadmapSection'));
 const MotionBox = motion(Box);
 const MotionTypography = motion(Typography);
 const MotionImage = motion.img;
-const MotionForm = motion.form;
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -59,14 +58,114 @@ const Hero = () => {
     }
   ];
 
+  const WaitlistForm = () => (
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        width: '100%',
+        maxWidth: '400px',
+        padding: '1.5rem',
+        backgroundColor: monoPalette.paper,
+        borderRadius: '16px',
+        border: `1px solid ${monoPalette.border}`,
+        position: 'relative',
+        overflow: 'hidden'
+      }}
+    >
+      <Typography
+        variant="h6"
+        sx={{
+          color: monoPalette.text.primary,
+          mb: 3,
+          fontWeight: 600,
+          textAlign: 'center',
+          fontSize: { xs: '1.125rem', sm: '1.25rem' }
+        }}
+      >
+        Join the Waitlist
+      </Typography>
+      <Box sx={{ position: 'relative' }}>
+        <Input
+          fullWidth
+          type="email"
+          placeholder="Enter email to get early access"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={isSubmitting}
+          error={submitStatus === 'error'}
+          disableUnderline
+          sx={{
+            mb: 2,
+            p: '14px 16px',
+            fontSize: '16px',
+            borderRadius: '12px',
+            border: `1px solid ${submitStatus === 'error' ? '#d32f2f' : monoPalette.border}`,
+            backgroundColor: monoPalette.hover,
+            '&:hover': {
+              borderColor: monoPalette.text.secondary,
+            },
+            '&.Mui-focused': {
+              borderColor: monoPalette.black,
+            },
+          }}
+        />
+        {submitStatus === 'error' && (
+          <Typography
+            variant="caption"
+            sx={{
+              color: 'error.main',
+              position: 'absolute',
+              bottom: '8px',
+              left: '14px'
+            }}
+          >
+            Unable to join waitlist. Please try again.
+          </Typography>
+        )}
+      </Box>
+      <Button
+        fullWidth
+        variant="contained"
+        type="submit"
+        disabled={isSubmitting || !email.trim()}
+        sx={{
+          backgroundColor: monoPalette.black,
+          color: monoPalette.paper,
+          py: { xs: 1.25, sm: 1.5 },
+          position: 'relative',
+          overflow: 'hidden',
+          '&:hover': {
+            backgroundColor: monoPalette.text.primary,
+          },
+        }}
+      >
+        {isSubmitting ? 'Adding to Waitlist...' : 'Join Waitlist'}
+      </Button>
+      {submitStatus === 'success' && (
+        <Typography
+          variant="body2"
+          sx={{
+            color: 'success.main',
+            textAlign: 'center',
+            mt: 2
+          }}
+        >
+          Thanks for joining! We'll notify you as soon as we launch our beta. Stay tuned for intelligent podcast guest discovery!
+        </Typography>
+      )}
+    </form>
+  );
+
   return (
     <Box
       sx={{
         position: 'relative',
-        minHeight: '100vh',
+        minHeight: '105vh',
         display: 'flex',
         flexDirection: 'column',
-        py: { xs: 4, sm: 6, md: 12 }
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        pt: { xs: 4, sm: 6, md: '12vh' }
       }}
     >
       {/* Main content */}
@@ -74,7 +173,7 @@ const Hero = () => {
         sx={{
           display: 'grid',
           gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-          gap: { xs: 4, sm: 6, md: 12 },
+          gap: { xs: 4, sm: 6, md: '6vw' },
           position: 'relative',
           zIndex: 1,
           mx: 'auto',
@@ -155,138 +254,45 @@ const Hero = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: { xs: 3, sm: 4 },
+            gap: { xs: 3, sm: 4, md: 6 },
             mt: { xs: 4, md: 0 }
           }}
         >
-          <MotionImage
-            src={robotLogo}
-            alt="PodcastBots.ai Robot"
-            initial={{ scale: 0.9, opacity: 0, y: 0 }}
-            animate={{ 
-              scale: 1, 
-              opacity: 1,
-              y: [-10, 0]
-            }}
-            transition={{ 
-              scale: { duration: 0.4 },
-              opacity: { duration: 0.4 },
-              y: {
-                duration: 1.5,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              }
-            }}
-            style={{
-              width: '100%',
-              maxWidth: '400px',
-              height: 'auto',
-              filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))',
-              transition: 'transform 0.3s ease'
-            }}
-          />
+          {/* Waitlist Form - Moved up on mobile */}
+          <Box sx={{ width: '100%', order: { xs: -1, md: 1 } }}>
+            <WaitlistForm />
+          </Box>
 
-          <MotionForm
-            onSubmit={handleSubmit}
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            style={{
-              width: '100%',
-              maxWidth: '400px',
-              padding: '1.5rem',
-              backgroundColor: monoPalette.paper,
-              borderRadius: '16px',
-              border: `1px solid ${monoPalette.border}`,
-              position: 'relative',
-              overflow: 'hidden'
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{
-                color: monoPalette.text.primary,
-                mb: 3,
-                fontWeight: 600,
-                textAlign: 'center',
-                fontSize: { xs: '1.125rem', sm: '1.25rem' }
+          {/* Robot Image */}
+          <Box sx={{ width: '100%', order: { xs: 0, md: 0 } }}>
+            <MotionImage
+              src={robotLogo}
+              alt="PodcastBots.ai Robot"
+              initial={{ scale: 0.9, opacity: 0, y: 0 }}
+              animate={{ 
+                scale: 1, 
+                opacity: 1,
+                y: [-10, 0]
               }}
-            >
-              Join the Creative Journey
-            </Typography>
-            <Box sx={{ position: 'relative' }}>
-              <TextField
-                fullWidth
-                type="email"
-                placeholder="Enter email to get early access"
-                variant="outlined"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={isSubmitting}
-                error={submitStatus === 'error'}
-                sx={{
-                  mb: 2,
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: '12px',
-                    backgroundColor: monoPalette.hover,
-                    '& fieldset': {
-                      borderColor: monoPalette.border,
-                    },
-                    '&:hover fieldset': {
-                      borderColor: monoPalette.text.secondary,
-                    },
-                    '&.Mui-focused fieldset': {
-                      borderColor: monoPalette.black,
-                    },
-                  },
-                }}
-              />
-              {submitStatus === 'error' && (
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: 'error.main',
-                    position: 'absolute',
-                    bottom: '8px',
-                    left: '14px'
-                  }}
-                >
-                  Unable to register. Let's try that again to start creating.
-                </Typography>
-              )}
-            </Box>
-            <Button
-              fullWidth
-              variant="contained"
-              type="submit"
-              disabled={isSubmitting || !email.trim()}
-              sx={{
-                backgroundColor: monoPalette.black,
-                color: monoPalette.paper,
-                py: { xs: 1.25, sm: 1.5 },
-                position: 'relative',
-                overflow: 'hidden',
-                '&:hover': {
-                  backgroundColor: monoPalette.text.primary,
-                },
+              transition={{ 
+                scale: { duration: 0.4 },
+                opacity: { duration: 0.4 },
+                y: {
+                  duration: 1.5,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "easeInOut"
+                }
               }}
-            >
-              {isSubmitting ? 'Getting Ready...' : 'Start Creating'}
-            </Button>
-            {submitStatus === 'success' && (
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'success.main',
-                  textAlign: 'center',
-                  mt: 2
-                }}
-              >
-                Thanks for joining! We'll notify you when you can start creating amazing conversations.
-              </Typography>
-            )}
-          </MotionForm>
+              style={{
+                width: '100%',
+                maxWidth: '400px',
+                height: 'auto',
+                filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))',
+                transition: 'transform 0.3s ease'
+              }}
+            />
+          </Box>
         </Box>
       </Box>
 
@@ -298,7 +304,7 @@ const Hero = () => {
       {/* Footer */}
       <Box
         sx={{
-          mt: { xs: 6, sm: 8, md: 12 },
+          mt: { xs: 6, sm: 8, md: '10vh' },
           pb: { xs: 3, sm: 4 },
           textAlign: 'center'
         }}
