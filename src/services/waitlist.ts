@@ -1,16 +1,42 @@
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { 
+  collection, 
+  addDoc, 
+  serverTimestamp, 
+  getDocs, 
+  query, 
+  where, 
+  Firestore, 
+  FieldValue 
+} from 'firebase/firestore';
 import { db } from '../firebase';
 
 interface WaitlistEntry {
   email: string;
   source: string;
-  signupDate: any; // FirebaseTimestamp
-  lastLogin: any; // FirebaseTimestamp
+  signupDate: FieldValue;
+  lastLogin: FieldValue;
 }
 
 export const addToWaitlist = async (email: string): Promise<void> => {
+  console.log('Attempting to add email to waitlist:', email);
+  
+  if (!db) {
+    console.error('Firestore not initialized');
+    throw new Error('Service unavailable. Please try again later.');
+  }
+
   try {
+    // Check for existing email
     const waitlistRef = collection(db, 'waitlist');
+    const q = query(waitlistRef, where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      console.log('Email already exists in waitlist');
+      throw new Error('This email is already on the waitlist.');
+    }
+
+    // Add new entry
     const entry: WaitlistEntry = {
       email,
       source: 'podcastbots.ai',
@@ -18,9 +44,14 @@ export const addToWaitlist = async (email: string): Promise<void> => {
       lastLogin: serverTimestamp()
     };
 
-    await addDoc(waitlistRef, entry);
+    const docRef = await addDoc(waitlistRef, entry);
+    console.log('Successfully added to waitlist with ID:', docRef.id);
+
   } catch (error) {
-    console.error('Error adding to waitlist:', error);
+    console.error('Error in addToWaitlist:', error);
+    if (error instanceof Error) {
+      throw error; // Re-throw if it's already our error
+    }
     throw new Error('Failed to join waitlist. Please try again.');
   }
 };
