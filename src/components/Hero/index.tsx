@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import { Box, Typography, Input, Button } from '@mui/material';
-import { motion } from 'framer-motion';
 import { monoPalette } from '../../theme';
 import robotLogo from '../../assets/images/AI Bot For PodCastBots No Background Transparent.png';
 import FeatureCard from './FeatureCard';
@@ -8,17 +7,6 @@ import { addToWaitlist } from '../../services/waitlist';
 
 // Lazy load the RoadmapSection
 const RoadmapSection = React.lazy(() => import('./RoadmapSection'));
-
-// Create motion components with proper typing
-const MotionBox = motion(Box);
-const MotionTypography = motion(Typography);
-const MotionImage = motion.img;
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.4 }
-};
 
 const Hero = () => {
   const [email, setEmail] = React.useState('');
@@ -152,7 +140,7 @@ const Hero = () => {
             mt: 2
           }}
         >
-          Thanks for joining! We'll notify you as soon as we launch our beta. Stay tuned for intelligent podcast guest discovery!
+          Thanks for joining! We'll notify you as soon as we launch our beta.
         </Typography>
       )}
     </form>
@@ -187,9 +175,8 @@ const Hero = () => {
         {/* Left side - Content */}
         <Box>
           <Box sx={{ mb: { xs: 2, sm: 3 } }}>
-            <MotionTypography
+            <Typography
               variant="h1"
-              {...fadeInUp}
               sx={{
                 fontSize: { xs: '1.5rem', sm: '1.75rem', md: '3rem' },
                 fontWeight: 600,
@@ -201,10 +188,9 @@ const Hero = () => {
               }}
             >
               Potentiating
-            </MotionTypography>
-            <MotionTypography
+            </Typography>
+            <Typography
               variant="h1"
-              {...fadeInUp}
               sx={{
                 fontSize: { xs: '2.75rem', sm: '3.5rem', md: '6rem' },
                 fontWeight: 700,
@@ -215,13 +201,11 @@ const Hero = () => {
               }}
             >
               Podcasters
-            </MotionTypography>
+            </Typography>
           </Box>
 
-          <MotionTypography
+          <Typography
             variant="body1"
-            {...fadeInUp}
-            transition={{ ...fadeInUp.transition, delay: 0.2 }}
             sx={{
               color: monoPalette.text.body,
               mb: { xs: 3, md: 4 },
@@ -231,12 +215,10 @@ const Hero = () => {
             }}
           >
             Transform your podcasting workflow with intelligent assistants that handle guest discovery, enhance interviews, and curate your best content.
-          </MotionTypography>
+          </Typography>
 
           {/* Feature cards */}
-          <MotionBox 
-            {...fadeInUp}
-            transition={{ ...fadeInUp.transition, delay: 0.4 }}
+          <Box 
             sx={{ 
               display: 'grid', 
               gap: { xs: 2, sm: 3 }, 
@@ -247,7 +229,7 @@ const Hero = () => {
             {features.map((feature) => (
               <FeatureCard key={feature.title} {...feature} />
             ))}
-          </MotionBox>
+          </Box>
         </Box>
 
         {/* Right side - Image and Waitlist Form */}
@@ -267,31 +249,14 @@ const Hero = () => {
 
           {/* Robot Image */}
           <Box sx={{ width: '100%', order: { xs: 0, md: 0 } }}>
-            <MotionImage
+            <img
               src={robotLogo}
               alt="PodcastBots.ai Robot"
-              initial={{ scale: 0.9, opacity: 0, y: 0 }}
-              animate={{ 
-                scale: 1, 
-                opacity: 1,
-                y: [-10, 0]
-              }}
-              transition={{ 
-                scale: { duration: 0.4 },
-                opacity: { duration: 0.4 },
-                y: {
-                  duration: 1.5,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  ease: "easeInOut"
-                }
-              }}
               style={{
                 width: '100%',
                 maxWidth: '400px',
                 height: 'auto',
-                filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))',
-                transition: 'transform 0.3s ease'
+                filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))'
               }}
             />
           </Box>
