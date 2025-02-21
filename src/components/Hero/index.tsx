@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { monoPalette } from '../../theme';
 import robotLogo from '../../assets/images/AI Bot For PodCastBots No Background Transparent.png';
 import FeatureCard from './FeatureCard';
+import { addToWaitlist } from '../../services/waitlist';
 
 // Lazy load the RoadmapSection
 const RoadmapSection = React.lazy(() => import('./RoadmapSection'));
@@ -30,10 +31,11 @@ const Hero = () => {
     setSubmitStatus('idle');
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await addToWaitlist(email);
       setSubmitStatus('success');
       setEmail('');
     } catch (error) {
+      console.error('Error in handleSubmit:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
