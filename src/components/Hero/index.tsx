@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react';
-import { Box, Typography, Input, Button } from '../../utils/mui';
+import { Box, Typography } from '../../utils/mui';
 import { monoPalette } from '../../theme';
 import FeatureCard from './FeatureCard';
-import { addToWaitlist } from '../../services/waitlist';
 import '../../styles/animations.css';
 
 // Import optimized images
@@ -12,146 +11,12 @@ const robotLogo = {
   fallback: new URL('../../assets/images/AI Bot For PodCastBots No Background Transparent.png', import.meta.url).href
 };
 
-// Lazy load the RoadmapSection
+// Lazy load components
 const RoadmapSection = React.lazy(() => import('./RoadmapSection'));
+const WaitlistForm = React.lazy(() => import('./WaitlistForm'));
+const FeatureCards = React.lazy(() => import('./FeatureCards'));
 
 const Hero = () => {
-  const [email, setEmail] = React.useState('');
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      await addToWaitlist(email);
-      setSubmitStatus('success');
-      setEmail('');
-    } catch (error) {
-      console.error('Error in handleSubmit:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const features = [
-    {
-      title: 'Smart Guest Discovery',
-      description: 'Coming in beta: Your dedicated assistant scans across academia, business, and domain experts to find your perfect guest matches.',
-      style: { backgroundColor: monoPalette.paper }
-    },
-    {
-      title: 'Personalized Outreach Assistant',
-      description: 'Coming in beta: Let your assistant craft personalized invitations that resonate with each guest\'s unique expertise and interests.',
-      style: { backgroundColor: monoPalette.black, color: monoPalette.paper }
-    },
-    {
-      title: 'Do What You Truly Love',
-      description: 'Let our assistants handle the tedious work while you focus on what brings you joy - creating meaningful conversations and connections with your guests.',
-      style: { backgroundColor: monoPalette.hover, gridColumn: { xs: 'auto', sm: '1 / -1' } }
-    }
-  ];
-
-  const WaitlistForm = () => (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        width: '100%',
-        maxWidth: '400px',
-        padding: '1.5rem',
-        backgroundColor: monoPalette.paper,
-        borderRadius: '16px',
-        border: `1px solid ${monoPalette.border}`,
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-    >
-      <Typography
-        variant="h6"
-        sx={{
-          color: monoPalette.text.primary,
-          mb: 3,
-          fontWeight: 600,
-          textAlign: 'center',
-          fontSize: { xs: '1.125rem', sm: '1.25rem' }
-        }}
-      >
-        Join the Waitlist
-      </Typography>
-      <Box sx={{ position: 'relative' }}>
-        <Input
-          fullWidth
-          type="email"
-          placeholder="Enter email to get early access"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          disabled={isSubmitting}
-          error={submitStatus === 'error'}
-          disableUnderline
-          sx={{
-            mb: 2,
-            p: '14px 16px',
-            fontSize: '16px',
-            borderRadius: '12px',
-            border: `1px solid ${submitStatus === 'error' ? '#d32f2f' : monoPalette.border}`,
-            backgroundColor: monoPalette.hover,
-            '&:hover': {
-              borderColor: monoPalette.text.secondary,
-            },
-            '&.Mui-focused': {
-              borderColor: monoPalette.black,
-            },
-          }}
-        />
-        {submitStatus === 'error' && (
-          <Typography
-            variant="caption"
-            sx={{
-              color: 'error.main',
-              position: 'absolute',
-              bottom: '8px',
-              left: '14px'
-            }}
-          >
-            Unable to join waitlist. Please try again.
-          </Typography>
-        )}
-      </Box>
-      <Button
-        fullWidth
-        variant="contained"
-        type="submit"
-        disabled={isSubmitting || !email.trim()}
-        sx={{
-          backgroundColor: monoPalette.black,
-          color: monoPalette.paper,
-          py: { xs: 1.25, sm: 1.5 },
-          position: 'relative',
-          overflow: 'hidden',
-          '&:hover': {
-            backgroundColor: monoPalette.text.primary,
-          },
-        }}
-      >
-        {isSubmitting ? 'Adding to Waitlist...' : 'Join Waitlist'}
-      </Button>
-      {submitStatus === 'success' && (
-        <Typography
-          variant="body2"
-          sx={{
-            color: 'success.main',
-            textAlign: 'center',
-            mt: 2
-          }}
-        >
-          Thanks for joining! We'll notify you as soon as we launch our beta.
-        </Typography>
-      )}
-    </form>
-  );
 
   return (
     <Box
@@ -225,18 +90,9 @@ const Hero = () => {
           </Typography>
 
           {/* Feature cards */}
-          <Box 
-            sx={{ 
-              display: 'grid', 
-              gap: { xs: 2, sm: 3 }, 
-              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
-              position: 'relative'
-            }}
-          >
-            {features.map((feature) => (
-              <FeatureCard key={feature.title} {...feature} />
-            ))}
-          </Box>
+          <Suspense fallback={<Box sx={{ height: 200 }} />}>
+            <FeatureCards />
+          </Suspense>
         </Box>
 
         {/* Right side - Image and Waitlist Form */}
@@ -251,7 +107,9 @@ const Hero = () => {
         >
           {/* Waitlist Form - Moved up on mobile */}
           <Box sx={{ width: '100%', order: { xs: -1, md: 1 } }}>
-            <WaitlistForm />
+            <Suspense fallback={<Box sx={{ height: 200 }} />}>
+              <WaitlistForm />
+            </Suspense>
           </Box>
 
           {/* Robot Image */}
