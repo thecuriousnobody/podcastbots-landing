@@ -11,4 +11,5 @@ declare module 'lucide-react' {
   export const Search: FC<IconProps>
   export const Mic: FC<IconProps>
   export const Share2: FC<IconProps>
+  export const Pencil: FC<IconProps>
 }

@@ -1,7 +1,8 @@
 import React, { Suspense } from 'react';
 import { Box, Typography } from '../../utils/mui';
 import { monoPalette } from '../../theme';
-import FeatureCard from './FeatureCard';
+import RoadmapTimeline from './RoadmapTimeline';
+import WaitlistAndFeatures from './WaitlistAndFeatures';
 import '../../styles/animations.css';
 
 // Import optimized images
@@ -12,17 +13,13 @@ const robotLogo = {
 };
 
 // Lazy load components
-const RoadmapSection = React.lazy(() => import('./RoadmapSection'));
-const WaitlistForm = React.lazy(() => import('./WaitlistForm'));
-const FeatureCards = React.lazy(() => import('./FeatureCards'));
 
 const Hero = () => {
-
   return (
     <Box
       sx={{
         position: 'relative',
-        minHeight: '105vh',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -33,20 +30,23 @@ const Hero = () => {
       {/* Main content */}
       <Box
         sx={{
-          display: 'grid',
-          gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-          gap: { xs: 4, sm: 6, md: '6vw' },
-          position: 'relative',
-          zIndex: 1,
-          mx: 'auto',
           width: '100%',
-          maxWidth: '1400px',
-          px: { xs: 2, sm: 4, md: 6 }
+          maxWidth: '1000px',
+          mx: 'auto',
+          px: { xs: 2, sm: 4 }
         }}
       >
-        {/* Left side - Content */}
-        <Box>
-          <Box sx={{ mb: { xs: 2, sm: 3 } }}>
+        {/* Header with Robot */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: { xs: 3, sm: 4, md: 6 },
+            mb: { xs: 4, sm: 6 }
+          }}
+        >
+          {/* Title */}
+          <Box>
             <Typography
               variant="h1"
               sx={{
@@ -68,91 +68,81 @@ const Hero = () => {
                 fontWeight: 700,
                 color: monoPalette.text.primary,
                 lineHeight: 1.1,
-                position: 'relative',
-                maxWidth: { xs: '90%', md: '100%' }
+                position: 'relative'
               }}
             >
               Podcasters
             </Typography>
           </Box>
 
-          <Typography
-            variant="body1"
-            sx={{
-              color: monoPalette.text.body,
-              mb: { xs: 3, md: 4 },
-              lineHeight: 1.6,
-              maxWidth: { xs: '100%', md: '600px' },
-              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+          {/* Robot Image */}
+          <Box 
+            sx={{ 
+              width: { xs: '120px', sm: '160px', md: '200px' },
+              flexShrink: 0
             }}
           >
-            Transform your podcasting workflow with intelligent assistants that handle guest discovery, enhance interviews, and curate your best content.
-          </Typography>
-
-          {/* Feature cards */}
-          <Suspense fallback={<Box sx={{ height: 200 }} />}>
-            <FeatureCards />
-          </Suspense>
-        </Box>
-
-        {/* Right side - Image and Waitlist Form */}
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: { xs: 3, sm: 4, md: 6 },
-            mt: { xs: 4, md: 0 }
-          }}
-        >
-          {/* Waitlist Form - Moved up on mobile */}
-          <Box sx={{ width: '100%', order: { xs: -1, md: 1 } }}>
-            <Suspense fallback={<Box sx={{ height: 200 }} />}>
-              <WaitlistForm />
-            </Suspense>
-          </Box>
-
-          {/* Robot Image */}
-          <Box sx={{ width: '100%', order: { xs: 0, md: 0 } }}>
             <picture>
               <source
                 type="image/webp"
                 srcSet={`${robotLogo.small} 200w, ${robotLogo.large} 400w`}
-                sizes="(max-width: 600px) 200px, 400px"
+                sizes="(max-width: 600px) 120px, (max-width: 900px) 160px, 200px"
               />
               <img
                 src={robotLogo.fallback}
                 alt="PodcastBots.ai Robot"
                 className="robot-float"
+                style={{ width: '100%', height: 'auto' }}
               />
             </picture>
           </Box>
         </Box>
-      </Box>
 
-      {/* Roadmap Section */}
-      <Suspense fallback={<Box sx={{ height: 200 }} />}>
-        <RoadmapSection />
-      </Suspense>
-
-      {/* Footer */}
-      <Box
-        sx={{
-          mt: { xs: 6, sm: 8, md: '10vh' },
-          pb: { xs: 3, sm: 4 },
-          textAlign: 'center'
-        }}
-      >
+        {/* Description */}
         <Typography
-          variant="body2"
+          variant="body1"
           sx={{
-            color: monoPalette.text.secondary,
-            opacity: 0.7,
-            fontSize: { xs: '0.75rem', sm: '0.875rem' }
+            color: monoPalette.text.body,
+            mb: 4,
+            lineHeight: 1.6,
+            fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' },
+            maxWidth: '800px'
           }}
         >
-          Part of the potentiator.ai family
+          Transform your podcasting workflow with intelligent assistants that handle guest discovery, enhance interviews, and curate your best content.
         </Typography>
+
+        {/* Waitlist and Features */}
+        <Box sx={{ mb: 4 }}>
+          <Suspense fallback={<Box sx={{ height: 200 }} />}>
+            <WaitlistAndFeatures />
+          </Suspense>
+        </Box>
+
+        {/* Roadmap */}
+        <Suspense fallback={<Box sx={{ height: 200 }} />}>
+          <RoadmapTimeline />
+        </Suspense>
+
+        {/* Footer */}
+        <Box
+          sx={{
+            mt: { xs: 6, sm: 8 },
+            pb: { xs: 3, sm: 4 },
+            textAlign: 'center'
+          }}
+        >
+          <Typography
+            variant="body2"
+            sx={{
+              color: monoPalette.text.secondary,
+              opacity: 0.7,
+              fontSize: { xs: '0.75rem', sm: '0.875rem' }
+            }}
+          >
+            Part of the potentiator.ai family
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
